@@ -186,12 +186,13 @@ class Changeset < ActiveRecord::Base
   def find_referenced_issue_by_id(id)
     return nil if id.blank?
     issue = Issue.find_by_id(id.to_i, :include => :project)
-    if issue
-      unless issue.project && (project == issue.project || project.is_ancestor_of?(issue.project) || project.is_descendant_of?(issue.project))
-        issue = nil
-      end
-    end
-    issue
+    #2012-05-15/AWB: Allow commits to reference any issue regardless of which project it's in
+    #if issue
+    #  unless issue.project && (project == issue.project || project.is_ancestor_of?(issue.project) || project.is_descendant_of?(issue.project))
+    #    issue = nil
+    #  end
+    #end
+    #issue
   end
 
   def fix_issue(issue)
